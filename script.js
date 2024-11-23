@@ -3,13 +3,13 @@ function createGrid(size){
         let div = document.createElement("div");
         // formula to get the percentage of each div width;
         let percentage = ((1 / size) * 100).toFixed(5);
-        div.style.cssText = `flex: 1 1 ${percentage}%;`
-
+        let flexProperty = `flex: 1 1 ${percentage}%;`;
+        div.style.cssText = flexProperty;
         container.appendChild(div);
         // Adds event listeners to div and remove it when not necessary anymore
         const changeBackground = () => {
-            div.style.backgroundColor = "blue";
-            div.removeEventListener("mouseenter", changeBackground);
+            div.style.cssText = `${flexProperty};  
+            background-color: rgb(${randomNumber()}, ${randomNumber()}, ${randomNumber()});`;
         }
         div.addEventListener("mouseenter", changeBackground);
     }
@@ -28,6 +28,10 @@ function getUserInput(){
     }
     return userInput;
     
+}
+function randomNumber(){
+    //between 0 and 255 (both included)
+    return Math.floor((Math.random() * 256));
 }
 // create a 16x16 grid of square divs and append it div.container
 let container = document.querySelector(".container");

@@ -1,27 +1,36 @@
 function createGrid(size){
     for(let i = 0; i < size * size; i++){
-        let div = document.createElement("div");
-        // formula to get the percentage of each div width;
-        let percentage = ((1 / size) * 100).toFixed(5);
-        let flexProperty = `flex: 1 1 ${percentage}%;`;
-        let opacity = 10;
-        div.style.cssText = flexProperty;
-        container.appendChild(div);
-        // Adds event listeners to div and remove it when not necessary anymore
-        const changeBackground = () => {
-            div.style.cssText = `${flexProperty};  
-            background-color: rgb(${randomNumber()}, ${randomNumber()}, ${randomNumber()});
-            opacity: ${opacity}%`;
+        function changeBackground(){
+            return `${flexProperty}; background-color: rgb(${randomNumber()}, ${randomNumber()}, ${randomNumber()});`;
+        }
+        function incrementOpacity(){
             if(opacity < 100) opacity += 10;
         }
-        div.addEventListener("mouseenter", changeBackground);
+        function changeSquareStyle(){
+            incrementOpacity();
+            square.style.cssText = changeBackground() + `opacity: ${opacity}%;`;
+        }
+
+        let square = document.createElement("square");
+        let squareSize = calcSquareSize(size);
+        let flexProperty = `flex: 1 1 ${squareSize}%;`;
+        let opacity = 0;
+        let initSquareStyle = flexProperty + ` opacity: ${opacity};`;
+        square.style.cssText = initSquareStyle;
+        container.appendChild(square);
+        // Adds event listeners to square and remove it when not necessary anymore
+        square.addEventListener("mouseenter", changeSquareStyle);
     }
 }
 
+function calcSquareSize(gridSize){
+    return ((1 / gridSize) * 100).toFixed(5);
+}
+
 function removeGrid(){
-    let grid = document.querySelectorAll(".container > div");
-    for(div of grid){
-        container.removeChild(div);
+    let grid = document.querySelectorAll(".container > square");
+    for(square of grid){
+        container.removeChild(square);
     }
 }
 function getUserInput(){
@@ -36,10 +45,11 @@ function randomNumber(){
     //between 0 and 255 (both included)
     return Math.floor((Math.random() * 256));
 }
-// create a 16x16 grid of square divs and append it div.container
+// create a 16x16 grid of square divs and append it square.container
 let container = document.querySelector(".container");
 let squaresPerSide = 16;
 createGrid(squaresPerSide);
+// button creates a new grid with desired size
 let btn = document.querySelector("button");
 btn.addEventListener("click", () =>{
     let userInput = getUserInput();

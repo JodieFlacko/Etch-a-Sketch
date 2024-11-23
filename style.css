@@ -13,11 +13,11 @@ body{
     flex-wrap: wrap;
     flex: 1 1 0;
     aspect-ratio: 1 / 1;
+    border: 2px solid black;
+    margin-bottom: 5px;
 }
 
 .container div{
-    /* width and height formula: ((1 / (numbers of squares per side)) * 100)  rounded down to the smallest integer
-    */
     aspect-ratio: 1;
     background-color: black;
 }

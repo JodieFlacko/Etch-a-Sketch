@@ -4,12 +4,15 @@ function createGrid(size){
         // formula to get the percentage of each div width;
         let percentage = ((1 / size) * 100).toFixed(5);
         let flexProperty = `flex: 1 1 ${percentage}%;`;
+        let opacity = 10;
         div.style.cssText = flexProperty;
         container.appendChild(div);
         // Adds event listeners to div and remove it when not necessary anymore
         const changeBackground = () => {
             div.style.cssText = `${flexProperty};  
-            background-color: rgb(${randomNumber()}, ${randomNumber()}, ${randomNumber()});`;
+            background-color: rgb(${randomNumber()}, ${randomNumber()}, ${randomNumber()});
+            opacity: ${opacity}%`;
+            if(opacity < 100) opacity += 10;
         }
         div.addEventListener("mouseenter", changeBackground);
     }

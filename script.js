@@ -1,6 +1,10 @@
 function createGrid(size){
-    for(let i = 0; i < size; i++){
+    for(let i = 0; i < size * size; i++){
         let div = document.createElement("div");
+        // formula to get the percentage of each div width;
+        let percentage = ((1 / size) * 100).toFixed(5);
+        div.style.cssText = `flex: 1 1 ${percentage}%;`
+
         container.appendChild(div);
         // Adds event listeners to div and remove it when not necessary anymore
         const changeBackground = () => {
@@ -10,13 +14,30 @@ function createGrid(size){
         div.addEventListener("mouseenter", changeBackground);
     }
 }
+
 function removeGrid(){
     let grid = document.querySelectorAll(".container > div");
     for(div of grid){
         container.removeChild(div);
     }
 }
+function getUserInput(){
+    let userInput = prompt("Enter the number of squares per side for the new grid: ");
+    while(userInput > 100 || userInput < 0 || isNaN(userInput)) {
+        userInput = prompt("Please enter a number between 0 and 100: ");
+    }
+    return userInput;
+    
+}
 // create a 16x16 grid of square divs and append it div.container
 let container = document.querySelector(".container");
-squaresPerSide = 256;
+let squaresPerSide = 16;
 createGrid(squaresPerSide);
+let btn = document.querySelector("button");
+btn.addEventListener("click", () =>{
+    let userInput = getUserInput();
+    removeGrid();
+    createGrid(userInput);
+});
+
+
